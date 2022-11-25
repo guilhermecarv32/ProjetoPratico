@@ -1,0 +1,7 @@
+package filaRecreio;
+
+public class ErroEntradaException extends Exception{
+	public ErroEntradaException() {
+		super("Digite uma nota válida!");
+	}
+}
