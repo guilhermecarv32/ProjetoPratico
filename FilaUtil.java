@@ -4,10 +4,12 @@ import java.util.Scanner;
 
 public class FilaUtil {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ErroEntradaException{
 		FilaRecreio cantina = new FilaRecreio();
 		Scanner scanner = new Scanner(System.in);
 		int op = 0;
+		boolean a = false;
+		double nota = 0;
 
 		do {
 			System.out.println("Qual operação deseja realizar(1-9): ");
@@ -43,14 +45,28 @@ public class FilaUtil {
 				String resposta = scanner.nextLine();
 				int pedido2 = 0;
 
-				System.out.println("Informe o outro pedido.");
 				if (resposta.equalsIgnoreCase("S")) {
+					System.out.println("Informe o outro pedido.");
 					pedido2 = scanner.nextInt();
 				}
 
-				System.out.println("Qual a nota do aluno? ");
-				double nota = scanner.nextDouble();
+				do {
+					System.out.println("Qual a nota do aluno? ");
+					try {
+						nota = scanner.nextDouble();
+						if(nota > 10 || nota < 0 ) {
+							throw new ErroEntradaException();
+						}
 
+						a = true;
+
+					} catch(Exception e) {
+						System.err.println(e.getMessage());
+					}
+			
+				} while (a == false);
+
+				
 				cantina.cadastrar(new Estudante(nome, sexo, pedido1, pedido2, nota));
 				scanner.nextLine();
 				
@@ -94,6 +110,7 @@ public class FilaUtil {
 
 		}while (op != 9);
 
+		scanner.close();
 	}
 
 
